@@ -6,80 +6,78 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+const dialogBox = document.querySelector('dialog-box');
+const dialogBoxBtn = document.querySelector('dialog-box-button');
 let DialogBoxButton = class DialogBoxButton extends LitElement {
     constructor() {
         super(...arguments);
         // Boolean regarding if the dialog box should be visible
-        this.openWindow = true;
+        this.boxHidden = true;
+        // confirming if submission is being triggered
+        this.isSubmitted = false;
         // Customization for the name on the button; "open" is default
-        this.btnName = "open";
-        this.type = "button";
+        this.btnName = 'open';
     }
     // button template to be added to the render
-    buttonTemplate() {
+    _buttonTemplate() {
         return html `
-            <button @click="${this._buttonNameHandler}">
-                ${this.btnName}
-            </button>
-        `;
+      <button
+        @click="${this.buttonCall}"
+        name="${this.btnName}"
+        id="${this.btnName}"
+      >
+        ${this.btnName}
+      </button>
+    `;
     }
-    // toggle to hide/show dialog box
-    _clickHandler() {
-        this.openWindow = !this.openWindow;
-        if (this.openWindow) {
-            this.btnName = "open";
-        }
-        else {
+    buttonCall() {
+        if (this.btnName === "open") {
+            dialogBox === null || dialogBox === void 0 ? void 0 : dialogBox.open();
+            console.log(this.btnName);
             this.btnName = "close";
         }
+        else if (this.btnName === "close") {
+            dialogBox === null || dialogBox === void 0 ? void 0 : dialogBox.close();
+            this.btnName = "open";
+        }
+        else if (this.btnName === "cancel") {
+            dialogBox === null || dialogBox === void 0 ? void 0 : dialogBox._cancel();
+            dialogBoxBtn.btnName = "open";
+        }
+        else if (this.btnName === "confirm") {
+            dialogBox === null || dialogBox === void 0 ? void 0 : dialogBox._confirm();
+            dialogBoxBtn.btnName = "open";
+        }
     }
-    // handler to deal with the different button functionalities
-    _buttonNameHandler() {
-        if (this.btnName === "confirm") {
-            console.log(this);
-        }
-        if (this.btnName === "cancel") {
-            this.openWindow = !this.openWindow;
-        }
-        if (this.btnName === "open" || "close") {
-            this._clickHandler();
-        }
-    }
-    // render to print to HTML
+    // print to HTML
     render() {
-        return html `
-            ${this.buttonTemplate()}
-            ${!this.openWindow ? html `<slot></slot>` : html ``}
-        `;
+        return html ` ${this._buttonTemplate()} `;
     }
 };
 // Stylization of button component
 DialogBoxButton.styles = css `
-        button {
-            color: black;
-            background-color: lightgray;
-            padding: 0.5rem 2rem;
-            font-family: sans-serif;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 1px solid darkgray;
-            border-radius: 15px;
-            cursor: pointer;
-        }
-        button:hover {
-                background-color: darkgreen;
-                color: lightgray;
-            }
-    `;
+    button {
+      color: black;
+      background-color: lightgray;
+      padding: 0.5rem 2rem;
+      font-family: sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      border: 1px solid darkgray;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: darkgreen;
+      color: lightgray;
+    }
+  `;
 __decorate([
     property({ type: Boolean })
-], DialogBoxButton.prototype, "openWindow", void 0);
+], DialogBoxButton.prototype, "boxHidden", void 0);
 __decorate([
     property({ attribute: 'btn-name' })
 ], DialogBoxButton.prototype, "btnName", void 0);
-__decorate([
-    property({ attribute: 'type' })
-], DialogBoxButton.prototype, "type", void 0);
 DialogBoxButton = __decorate([
     customElement('dialog-box-button')
 ], DialogBoxButton);
