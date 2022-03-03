@@ -1,6 +1,7 @@
 import {LitElement, css, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
+// variables to fetch the custom elements
 const dialogBox = document.querySelector('dialog-box');
 const dialogBoxBtn = document.querySelector('dialog-box-button');
 
@@ -49,6 +50,7 @@ export class DialogBoxButton extends LitElement {
     `;
   }
 
+  // method that decides what the button will do based on it's name
   buttonCall() {
     if (this.btnName === "open") {
       dialogBox?.open();

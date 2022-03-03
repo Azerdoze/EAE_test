@@ -1,7 +1,7 @@
 {
   "name": "eurico-lit-components",
-  "version": "1.0.1",
-  "description": "A simple web component I made to test my know how with lit",
+  "version": "1.0.5",
+  "description": "A simple package of two web components I made to test my know how with lit",
   "main": "dist/index.html",
   "module": "dist/index.html",
   "type": "module",
